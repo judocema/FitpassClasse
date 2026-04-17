@@ -1,0 +1,146 @@
+@startuml
+
+
+skinparam classAttributeIconSize 0
+
+
+
+class Aluno {
+    idAluno
+    nome
+    cpf
+    email
+    telefone
+    endereco
+    rfid
+    status
+    contratarPlano()
+    agendarAula()
+    cancelarAgendamento()
+    atualizarStatus()
+    registraAceso()
+    receberNotificacao()
+}
+
+class Plano {
+    idPlano
+    nome
+    tipo
+    valor
+    ativo
+    ativar()
+    desativar()
+    alterarValor()
+}
+
+class Pagamento {
+    idPagamento
+    data
+    valor
+    formaPagamento
+    status
+    realizado()
+    aPagar()
+    atualizarStatus()
+}
+
+class Acesso {
+    idAcesso
+    dataHora
+    autorizado
+    statusAcesso()
+    permitir()
+
+}
+
+class Aula {
+    idAula
+    nome
+    horario
+    capacidadeMaxima
+    registrarAula()
+    reagendarAula()
+    
+}
+
+class Agendamento {
+    idAgendamento
+    dataReserva
+    status
+    reagendarAgendamento()
+    cancelarAgendamento()
+    registrarAgendamento()
+}
+
+class Presenca {
+    idPresenca
+    data
+    presente
+    statusPresenca()
+    registrarPresença()
+}
+
+class AvaliacaoFisica {
+    idAvaliacao
+    data
+    peso
+    imc
+    percentualGordura
+    observacoes
+    anexo
+    implementarAvaliacao()
+    modificarAvaliacao()
+}
+
+class Notificacao {
+    idNotificacao
+    tipo
+    dataEnvio
+    status
+    mensagem
+    enviarNotificacao()
+    
+}
+
+
+abstract class Funcionario {
+}
+
+class Instrutor {
+    idInstrutor
+    nome
+    especialidade
+}
+
+class Recepcionista {
+    idRecepcionista
+    nome
+}
+
+class Gerente {
+    idGerente
+    nome
+}
+
+Funcionario <|-- Instrutor
+Funcionario <|-- Recepcionista
+Funcionario <|-- Gerente
+
+Aluno "0..*" -- "1" Plano : Escolhe
+Aluno "1" -- "0..*" Pagamento : Realiza
+Aluno "1" -- "0..*" Acesso: Gera
+Aluno "1" -- "0..*" Agendamento: Realiza
+Aluno "1" -- "0..*" Presenca: Possui
+Aluno "1" -- "0..*" AvaliacaoFisica: Possui
+Aluno "1" -- "0..*" Notificacao: Recebe
+
+Aula "1" -- "0..*" Agendamento: Possui
+Aula "1" -- "0..*" Presenca: Registra
+
+Instrutor "1" -- "0..*" Aula: ministra
+Instrutor "1" -- "0..*" AvaliacaoFisica: realiza
+Instrutor "1" -- "0..*" Presenca: registra
+
+
+
+@enduml
